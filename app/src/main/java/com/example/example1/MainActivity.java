@@ -2,15 +2,12 @@ package com.example.example1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,17 +17,16 @@ public class MainActivity extends AppCompatActivity {
     CheckBox checkBox;
     TextView txtView;
 
-    TextView textView2;
+//    TextView textView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         changeInvizible(); // changeInvizible
         checkBoxChange(); //checbox
 //        addListenerInButton(); //изменение цвета
     }
-
-
 
     //Изменяем цвет надписи или замена текста
     public void changeInvizible(){
@@ -70,6 +66,26 @@ public class MainActivity extends AppCompatActivity {
            }
        });
 }
+
+
+//Сделаем сохранение состоянии дял Checkbox
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("VIEW_KEY", txtView.getVisibility());
+        outState.putBoolean("C_KEY", checkBox.isChecked());
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        txtView.setVisibility(savedInstanceState.getInt("VIEW_KEY"));
+        checkBox.setChecked(savedInstanceState.getBoolean("C_KEY"));
+    }
+
+
+
+
+
+
 
 
     // РАБОЧИЙ КОД
