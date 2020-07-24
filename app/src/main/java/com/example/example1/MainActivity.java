@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     CheckBox checkBox;
     TextView txtView;
     Button button2;
+    private boolean x = true;
+
 //    TextView textView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +49,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    // checkBox для надписи GOOD
-   public void checkBoxChange(){
+    public void checkBoxChange(){
        txtView = (TextView)findViewById(R.id.good);
        button2 = (Button)findViewById(R.id.button2);
        checkBox = (CheckBox) findViewById(R.id.checkBox);
-       button2.setOnClickListener(new View.OnClickListener() { // сделал чтобы чекбокс срабатывал только при нажатии на кнопку заменив тут checkBox/button2
+       txtView.setVisibility(View.INVISIBLE);
+       button2.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-          if (checkBox.isChecked())
+          if (x && !checkBox.isChecked())
           {
               txtView.setVisibility(View.INVISIBLE);
+              checkBox.setEnabled(true);//disable your check box
+              x=false;
           }
-          else
+           else if (!x && checkBox.isChecked())
           {
               txtView.setVisibility(View.VISIBLE);
+              checkBox.setEnabled(false);//disable your check box
+              x=true;
           }
+          else if (x && checkBox.isChecked())
+          {
+              txtView.setVisibility(View.INVISIBLE);
+              checkBox.setEnabled(true);//disable your check box
+              x=false;
+          }
+
            }
        });
 }
@@ -73,17 +85,45 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("VIEW_KEY", txtView.getVisibility());
         outState.putBoolean("C_KEY", checkBox.isChecked());
+        outState.putBoolean("X_KEY", x=true);
+        outState.putBoolean("E_KEY", checkBox.isEnabled());
         super.onSaveInstanceState(outState);
     }
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         txtView.setVisibility(savedInstanceState.getInt("VIEW_KEY"));
         checkBox.setChecked(savedInstanceState.getBoolean("C_KEY"));
+        savedInstanceState.getBoolean("X_KEY");
+        checkBox.setEnabled(savedInstanceState.getBoolean("E_KEY"));
     }
 
 
 
 
+
+    // РАБОЧИЙ КОД
+    // checkBox для надписи GOOD  старая версия без checkBox.setEnabled(false);//disable checkbox
+//   public void checkBoxChange(){
+//       txtView = (TextView)findViewById(R.id.good);
+//       button2 = (Button)findViewById(R.id.button2);
+//       checkBox = (CheckBox) findViewById(R.id.checkBox);
+//       button2.setOnClickListener(new View.OnClickListener() { // сделал чтобы чекбокс срабатывал только при нажатии на кнопку заменив тут checkBox/button2
+//           @Override
+//           public void onClick(View view) {
+//          if (checkBox.isChecked())
+//          {
+//              txtView.setVisibility(View.VISIBLE);
+//              checkBox.setEnabled(false);//disable your check box
+//
+//          }
+//          else
+//          {
+//              txtView.setVisibility(View.INVISIBLE);
+//              checkBox.setEnabled(true);//disable your check box
+//          }
+//           }
+//       });
+//}
 
 
 
