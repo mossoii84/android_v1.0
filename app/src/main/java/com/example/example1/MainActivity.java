@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     CheckBox checkBox;
     TextView txtView;
-
+    Button button2;
 //    TextView textView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
     // checkBox для надписи GOOD
    public void checkBoxChange(){
        txtView = (TextView)findViewById(R.id.good);
+       button2 = (Button)findViewById(R.id.button2);
        checkBox = (CheckBox) findViewById(R.id.checkBox);
-       checkBox.setOnClickListener(new View.OnClickListener() {
+       button2.setOnClickListener(new View.OnClickListener() { // сделал чтобы чекбокс срабатывал только при нажатии на кнопку заменив тут checkBox/button2
            @Override
            public void onClick(View view) {
           if (checkBox.isChecked())
@@ -67,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
        });
 }
 
-
-//Сделаем сохранение состоянии дял Checkbox
+//Делаем сохранение состоянии для Checkbox
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("VIEW_KEY", txtView.getVisibility());
